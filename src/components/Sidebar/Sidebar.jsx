@@ -18,6 +18,9 @@ import { Link } from "react-router-dom";
 import { useTheme } from "@mui/styles";
 import useStyles from "./styles";
 
+// Genre Redux
+import { useGetGenresQuery } from "../../services/TMDB";
+
 // demo categories
 
 const categories = [
@@ -43,7 +46,9 @@ const blueLogo =
 const Sidebar = ({ setMobileOpen }) => {
   const theme = useTheme();
   const classes = useStyles();
+  const { data, isFetching } = useGetGenresQuery();
 
+  console.log(data);
   return (
     <>
       <Link to="/" className={classes.imageLink}>
@@ -58,6 +63,7 @@ const Sidebar = ({ setMobileOpen }) => {
 
       <List>
         <ListSubheader>Categories</ListSubheader>
+
         {categories.map(({ label, value }) => (
           <Link key={value} className={classes.links} to="/">
             <ListItem onClick={() => {}} button>
@@ -81,10 +87,15 @@ const Sidebar = ({ setMobileOpen }) => {
 
       <List>
         <ListSubheader>Genres</ListSubheader>
-        {demoCategories.map(({ label, value }) => (
-          <Link key={value} className={classes.links} to="/">
-            <ListItem onClick={() => {}} button>
-              {/*
+        {isFetching ? (
+          <Box display="flex" justifyContent="center">
+            <CircularProgress />
+          </Box>
+        ) : (
+          data.genres.map(({ name, id }) => (
+            <Link key={name} className={classes.links} to="/">
+              <ListItem onClick={() => {}} button>
+                {/*
               <ListItemIcon>
                 <img
                   src={redLogo}
@@ -94,10 +105,11 @@ const Sidebar = ({ setMobileOpen }) => {
                 />
               </ListItemIcon>
         */}
-              <ListItemText primary={label} />
-            </ListItem>
-          </Link>
-        ))}
+                <ListItemText primary={name} />
+              </ListItem>
+            </Link>
+          ))
+        )}
       </List>
     </>
   );
