@@ -21,21 +21,13 @@ import useStyles from "./styles";
 // Genre Redux
 import { useGetGenresQuery } from "../../services/TMDB";
 
-// demo categories
+// Genre Icons
+import genreIcons from "../../assets/genres";
 
 const categories = [
   { label: "Popular", value: "popular" },
   { label: "Top Rated", value: "top_rated" },
   { label: "Upcoming", value: "upcoming" },
-];
-
-const demoCategories = [
-  { label: "Comedy", value: "comedy" },
-  { label: "Action", value: "action" },
-  { label: "Horror", value: "horror" },
-  { label: "Anime", value: "anime" },
-  { label: "Thriller", value: "thriller" },
-  { label: "Romance", value: "romance" },
 ];
 
 const redLogo =
@@ -67,16 +59,14 @@ const Sidebar = ({ setMobileOpen }) => {
         {categories.map(({ label, value }) => (
           <Link key={value} className={classes.links} to="/">
             <ListItem onClick={() => {}} button>
-              {/*
               <ListItemIcon>
                 <img
-                  src={redLogo}
-                  alt="red logo"
+                  src={genreIcons[label.toLowerCase()]}
+                  alt="icon pic here"
                   className={classes.genreImages}
                   height={30}
                 />
               </ListItemIcon>
-        */}
               <ListItemText primary={label} />
             </ListItem>
           </Link>
@@ -95,16 +85,14 @@ const Sidebar = ({ setMobileOpen }) => {
           data.genres.map(({ name, id }) => (
             <Link key={name} className={classes.links} to="/">
               <ListItem onClick={() => {}} button>
-                {/*
-              <ListItemIcon>
-                <img
-                  src={redLogo}
-                  alt="red logo"
-                  className={classes.genreImages}
-                  height={30}
-                />
-              </ListItemIcon>
-        */}
+                <ListItemIcon>
+                  <img
+                    src={genreIcons[name.toLowerCase()]}
+                    alt="icon pic here"
+                    className={classes.genreImages}
+                    height={30}
+                  />
+                </ListItemIcon>
                 <ListItemText primary={name} />
               </ListItem>
             </Link>
