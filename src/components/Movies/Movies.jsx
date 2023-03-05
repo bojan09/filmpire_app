@@ -40,8 +40,6 @@ const Movies = () => {
 
   if (error) return `An error has occured. ${error}`;
 
-  console.log(data);
-
   return (
     <div>
       <MovieList movies={data} />
