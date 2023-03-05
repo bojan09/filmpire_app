@@ -10,13 +10,24 @@ import {
 
 // Redux
 import { useSelector } from "react-redux";
+// Redux Slices & Query
 import { useGetMoviesQuery } from "../../services/TMDB";
+import { selectGenreOrCategory } from "../../features/currentGenreOrCategory";
 
 // Components
 import MovieList from "../MovieList/MovieList";
 
+//******** Movies ********
 const Movies = () => {
-  const { data, error, isFetching } = useGetMoviesQuery();
+  const [page, setPage] = useState(1);
+
+  const { genreIdOrCategoryName } = useSelector(
+    (state) => state.currentGenreOrCategory
+  );
+
+  const { data, error, isFetching } = useGetMoviesQuery({
+    genreIdOrCategoryName,
+  });
 
   if (isFetching) {
     return (
@@ -32,13 +43,13 @@ const Movies = () => {
         <Typography variant="h4">
           No movies that match that name.
           <br />
-          Plesae search for something else.
+          Please search for something else.
         </Typography>
       </Box>
     );
   }
 
-  if (error) return `An error has occured. ${error}`;
+  if (error) return `An error has occured`;
 
   return (
     <div>
