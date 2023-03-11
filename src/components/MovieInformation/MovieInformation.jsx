@@ -16,7 +16,7 @@ import {
 
 // mui icons
 import {
-  Movies as MovieIcon,
+  Movie as MovieIcon,
   Theaters,
   Language,
   PlusOne,
@@ -49,6 +49,11 @@ import useStyles from "./styles";
 
 const MovieInformation = () => {
   const classes = useStyles();
+  const addToFavorites = () => {};
+  const addToWatchlist = () => {};
+
+  const isMovieFavorited = false;
+  const isMovieWatchlisted = true;
 
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -115,6 +120,7 @@ const MovieInformation = () => {
         <Grid item className={classes.genresContainer}>
           {data?.genres?.map((genre) => (
             <Link
+              style={{ textDecoration: "none" }}
               key={genre.name}
               className={classes.links}
               to="/"
@@ -131,6 +137,126 @@ const MovieInformation = () => {
               </Typography>
             </Link>
           ))}
+        </Grid>
+
+        {/* --- Overview --- */}
+        <Typography variant="h5" gutterBottom style={{ marginTop: "10px" }}>
+          Overview
+        </Typography>
+
+        <Typography style={{ marginBottom: "2rem" }}>
+          {data?.overview}
+        </Typography>
+
+        <Typography variant="h5" gutterBottom>
+          Top Cast
+        </Typography>
+
+        {/* --- Top Cast Grid --- */}
+        <Grid item container spacing={2}>
+          {data &&
+            data?.credits.cast
+              ?.map(
+                (character, i) =>
+                  character.profile_path && (
+                    <Grid
+                      key={i}
+                      item
+                      xs={4}
+                      md={2}
+                      component={Link}
+                      to={`/actors/${character.id}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <img
+                        className={classes.castImage}
+                        src={`https://image.tmdb.org/t/p/w500/${character.profile_path}`}
+                        alt={character.name}
+                      />
+                      <Typography color="textPrimary">
+                        {character?.name}
+                      </Typography>
+                      <Typography color="textSecondary">
+                        {character.character.split("/")[0]}
+                      </Typography>
+                    </Grid>
+                  )
+              )
+              .slice(0, 6)}
+        </Grid>
+
+        {/* ---  Buttons Grid --- */}
+        <Grid item container style={{ marginTop: "2rem" }}>
+          <div className={classes.buttonsContainer}>
+            {/* ---  3 Button Grid --- */}
+            <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
+              <ButtonGroup size="medium" variant="outlined">
+                {/* --- Movie Website Button --- */}
+                <Button
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={data?.homepage}
+                  endIcon={<Language />}
+                >
+                  Website
+                </Button>
+
+                {/* --- IMDB Website Button --- */}
+                <Button
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={`https://www.imdb.com/title/${data?.imdb_id}`}
+                  endIcon={<MovieIcon />}
+                >
+                  IMDB
+                </Button>
+
+                {/* --- Movie Trailer Button --- */}
+                <Button onClick={() => {}} href="#" endIcon={<Theaters />}>
+                  Trailer
+                </Button>
+              </ButtonGroup>
+            </Grid>
+
+            {/* ---  3 Button Grid --- */}
+            <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
+              <ButtonGroup size="medium" variant="outlined">
+                {/* --- Add to Favorites Button --- */}
+                <Button
+                  onClick={addToFavorites}
+                  endIcon={
+                    isMovieFavorited ? <Favorite /> : <FavoriteBorderOutlined />
+                  }
+                >
+                  {isMovieFavorited ? "Unfavorite" : "Favorite"}
+                </Button>
+
+                {/* --- Add to Watchlist Button --- */}
+                <Button
+                  onClick={addToWatchlist}
+                  endIcon={isMovieWatchlisted ? <Remove /> : <PlusOne />}
+                >
+                  Watchlist
+                </Button>
+
+                {/* --- Movie Trailer Button --- */}
+                <Button
+                  sx={{ borderColor: "primary.main" }}
+                  endIcon={<ArrowBack />}
+                >
+                  <Typography
+                    style={{ textDecoration: "none" }}
+                    component={Link}
+                    to="/"
+                    color="inherit"
+                    variant="subtitle2"
+                  >
+                    Back
+                  </Typography>
+                </Button>
+              </ButtonGroup>
+            </Grid>
+          </div>
         </Grid>
       </Grid>
     </Grid>
