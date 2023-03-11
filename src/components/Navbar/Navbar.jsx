@@ -45,8 +45,6 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const dispatch = useDispatch();
 
-  console.log(user);
-
   const token = localStorage.getItem("request_token");
   const sessionIdFromLocalStorage = localStorage.getItem("session_id");
 
@@ -98,7 +96,7 @@ const Navbar = () => {
               <Button
                 color="inherit"
                 component={Link}
-                to={`/profile/:id`}
+                to={`/profile/${user.id}`}
                 className={classes.linkButton}
                 onClick={() => {}}
               >
