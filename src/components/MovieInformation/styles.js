@@ -13,6 +13,7 @@ export default makeStyles((theme) => ({
   poster: {
     borderRadius: "20px",
     boxShadow: "0.5em 1em 1em rgb(64, 64, 70)",
+    margin: "0 auto 1rem",
     width: "80%",
     [theme.breakpoints.down("md")]: {
       margin: "0 auto !imporatant",
@@ -61,6 +62,21 @@ export default makeStyles((theme) => ({
     width: "100%",
     [theme.breakpoints.down("sm")]: {
       flexDirection: "column",
+    },
+  },
+
+  modal: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  video: {
+    width: "50%",
+    height: "50%",
+    [theme.breakpoints.down("sm")]: {
+      width: "90%",
+      height: "90%",
     },
   },
 }));
