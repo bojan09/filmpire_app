@@ -18,6 +18,7 @@ export default makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       margin: "0 auto !imporatant",
       width: "50%",
+      marginBottom: "30px",
     },
     [theme.breakpoints.down("sm")]: {
       margin: "0 auto !imporatant",
@@ -62,6 +63,9 @@ export default makeStyles((theme) => ({
     width: "100%",
     [theme.breakpoints.down("sm")]: {
       flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      gap: "2px",
     },
   },
 
