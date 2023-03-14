@@ -64,6 +64,20 @@ const MovieInformation = () => {
 
   const { user } = useSelector(userSelector);
 
+  const { data: favoriteMovies } = useGetListQuery({
+    listName: "favorite/movies",
+    accountId: user.id,
+    sessionId: localStorage.getItem("session_id"),
+    page: 1,
+  });
+
+  const { data: watchlistMovies } = useGetListQuery({
+    listName: "watchlist/movies",
+    accountId: user.id,
+    sessionId: localStorage.getItem("session_id"),
+    page: 1,
+  });
+
   const addToFavorites = async () => {
     await axios.post(
       `https://api.themoviedb.org/3/account/${user.id}/favorite?api_key=${
@@ -98,20 +112,6 @@ const MovieInformation = () => {
   const { id } = useParams();
 
   const { data, isFetching, error } = useGetMovieQuery(id);
-
-  const { data: favoriteMovies } = useGetListQuery({
-    listName: "favorite/movies",
-    accountId: user.id,
-    sessionId: localStorage.getItem("session_id"),
-    page: 1,
-  });
-
-  const { data: watchlistMovies } = useGetListQuery({
-    listName: "favorite/movies",
-    accountId: user.id,
-    sessionId: localStorage.getItem("session_id"),
-    page: 1,
-  });
 
   const { data: recommendations, isFetching: isRecommendationFetching } =
     useGetRecommendationsQuery({ list: "/recommendations", movie_id: id });
