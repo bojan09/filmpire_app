@@ -59,33 +59,38 @@ const MovieInformation = () => {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
-  const [isMovieFavorited, setisMovieFavorited] = useState(false);
+  const [isMovieFavorited, setIsMovieFavorited] = useState(false);
   const [isMovieWatchlisted, setIsMovieWatchlisted] = useState(false);
 
-  const user = useSelector(userSelector);
+  const { user } = useSelector(userSelector);
 
   const addToFavorites = async () => {
-    await axios.get(
+    await axios.post(
       `https://api.themoviedb.org/3/account/${user.id}/favorite?api_key=${
         process.env.REACT_APP_TMDB_KEY
-      }&session_id=${localStorage.getItem("session_id")},{
-        media_type='movie'
-        media_id=id,
+      }&session_id=${localStorage.getItem("session_id")}`,
+      {
+        media_type: "movie",
+        media_id: id,
         favorite: !isMovieFavorited,
-      }`
+      }
     );
-    setisMovieFavorited((prev) => !prev);
+
+    setIsMovieFavorited((prev) => !prev);
   };
-  const addToWatchlist = async () => {
-    await axios.get(
+
+  const addToWatchList = async () => {
+    await axios.post(
       `https://api.themoviedb.org/3/account/${user.id}/watchlist?api_key=${
         process.env.REACT_APP_TMDB_KEY
-      }&session_id=${localStorage.getItem("session_id")},{
-      media_type='movie'
-      media_id=id,
-      favorite: !isMovieWatchlisted,
-    }`
+      }&session_id=${localStorage.getItem("session_id")}`,
+      {
+        media_type: "movie",
+        media_id: id,
+        watchlist: !isMovieWatchlisted,
+      }
     );
+
     setIsMovieWatchlisted((prev) => !prev);
   };
 
@@ -112,7 +117,7 @@ const MovieInformation = () => {
     useGetRecommendationsQuery({ list: "/recommendations", movie_id: id });
 
   useEffect(() => {
-    setisMovieFavorited(
+    setIsMovieFavorited(
       !!favoriteMovies?.results?.find((movie) => movie?.id === data?.id)
     );
   }, [favoriteMovies, data?.id]);
@@ -301,7 +306,7 @@ const MovieInformation = () => {
 
                 {/* --- Add to Watchlist Button --- */}
                 <Button
-                  onClick={addToWatchlist}
+                  onClick={addToWatchList}
                   endIcon={isMovieWatchlisted ? <Remove /> : <PlusOne />}
                 >
                   Watchlist
