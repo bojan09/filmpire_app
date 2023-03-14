@@ -15,8 +15,10 @@ import {
   Brightness7,
 } from "@mui/icons-material";
 
-// state and links
-import { useState, useEffect } from "react";
+// state & context
+import { useState, useEffect, useContext } from "react";
+
+// react dom
 import { Link } from "react-router-dom";
 
 // styles
@@ -36,11 +38,16 @@ import { useDispatch, useSelector } from "react-redux";
 // slice
 import { setUser, userSelector } from "../../features/auth";
 
+// dark/light mode context
+import { ColorModeContext } from "../../utils/ToggleColorMode";
+
 const Navbar = () => {
   const { isAuthenticated, user } = useSelector(userSelector);
 
   const classes = useStyles();
   const theme = useTheme();
+  const colorMode = useContext(ColorModeContext);
+
   const isMobile = useMediaQuery("(max-width:600px)");
   const [mobileOpen, setMobileOpen] = useState(false);
   const dispatch = useDispatch();
@@ -83,7 +90,11 @@ const Navbar = () => {
               <Menu />
             </IconButton>
           )}
-          <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {}}>
+          <IconButton
+            color="inherit"
+            sx={{ ml: 1 }}
+            onClick={colorMode.ToggleColorMode}
+          >
             {theme.palette.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
           {!isMobile && <Search />}

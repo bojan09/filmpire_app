@@ -1,23 +1,29 @@
 import React from "react";
+
+// react dom
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Provider } from "react-redux";
 
+// styles
 import "./index.css";
+// dark/light mode toggler
+import ToggleColorModeProvider from "./utils/ToggleColorMode";
 
-import App from "./components/App";
+// redux
+import { Provider } from "react-redux";
+// redux store
 import store from "./app/store";
 
-const theme = createTheme({});
+// components
+import App from "./components/App";
 
 ReactDOM.render(
   <Provider store={store}>
-    <ThemeProvider theme={theme}>
+    <ToggleColorModeProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </ThemeProvider>
+    </ToggleColorModeProvider>
   </Provider>,
   document.getElementById("root")
 );
