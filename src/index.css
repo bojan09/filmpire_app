@@ -11,6 +11,9 @@
 }
 
 
+::-webkit-scrollbar:horizontal {
+    display: none;
+}
 
 * {
     text-decoration: none;

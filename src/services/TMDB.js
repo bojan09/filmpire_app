@@ -50,6 +50,12 @@ export const tmdbApi = createApi({
         `/movie/${movie_id}/${list}?api_key=${tmdbApiKey}`,
     }),
 
+    //* Get List of Favorite Movies or Watchlisted movies
+    getList: builder.query({
+      query: ({ listName, accountId, sessionId, page }) =>
+        `/account/${accountId}/${listName}?api_key=${tmdbApiKey}&session_id=${sessionId}&page=${page}`,
+    }),
+
     //* Get Actors - details
     getActorsDetails: builder.query({
       query: (id) => `person/${id}?api_key=${tmdbApiKey}`,
@@ -67,6 +73,7 @@ export const {
   useGetMoviesQuery,
   useGetGenresQuery,
   useGetMovieQuery,
+  useGetListQuery,
   useGetRecommendationsQuery,
   useGetActorsDetailsQuery,
   useGetMoviesByActorIdQuery,
