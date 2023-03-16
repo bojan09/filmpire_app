@@ -1,6 +1,10 @@
 import React, { useEffect, useContext } from "react";
 
+// change color functionality
 import { ColorModeContext } from "../../utils/ToggleColorMode";
+
+// login/logout fu nctionality
+import { fetchToken } from "../../utils";
 
 import alanBtn from "@alan-ai/alan-sdk-web";
 
@@ -18,6 +22,12 @@ const useAlan = () => {
           } else {
             setMode("dark");
           }
+        } else if (command === "login") {
+          fetchToken();
+        } else if (command === "logout") {
+          localStorage.clear();
+
+          window.location.href = "/";
         }
       },
     });
