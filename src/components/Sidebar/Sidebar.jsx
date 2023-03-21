@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 //  MUI Library
 import {
   Divider,
@@ -47,6 +49,10 @@ const Sidebar = ({ setMobileOpen }) => {
   const { genreIdOrCategoryName } = useSelector(
     (state) => state.currentGenreOrCategory
   );
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [genreIdOrCategoryName]);
 
   return (
     <>
