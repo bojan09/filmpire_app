@@ -12,16 +12,16 @@ import {
 import { useSelector } from "react-redux";
 // Redux Slices & Query
 import { useGetMoviesQuery } from "../../services/TMDB";
-import { selectGenreOrCategory } from "../../features/currentGenreOrCategory";
 
 // Components
 import MovieList from "../MovieList/MovieList";
 import Pagination from "../Pagination/Pagination";
+import FeaturedMovie from "../FeaturedMovie/FeaturedMovie";
 
 const Movies = () => {
   const [page, setPage] = useState(1);
   const lg = useMediaQuery((theme) => theme.breakpoints.only("lg"));
-  const numberOfMovies = lg ? 16 : 18;
+  const numberOfMovies = lg ? 17 : 19;
 
   const { genreIdOrCategoryName, searchQuery } = useSelector(
     (state) => state.currentGenreOrCategory
@@ -57,6 +57,7 @@ const Movies = () => {
 
   return (
     <div>
+      <FeaturedMovie movie={data.results[0]} excludeFirst />
       <MovieList movies={data} numberOfMovies={numberOfMovies} />
       <Pagination
         currentPage={page}
